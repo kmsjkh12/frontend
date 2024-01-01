@@ -1,0 +1,11 @@
+@font-face {
+    font-family: "Jalnan2TTF";
+    src: url("./fonts/Jalnan2TTF.ttf");
+}
+
+@font-face {
+    font-family: 'omyu_pretty';
+    src: url('./fonts/omyu\ pretty.ttf');
+    font-weight: normal;
+    font-style: normal;
+}

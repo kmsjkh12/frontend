@@ -1,12 +1,10 @@
 import React from "react";
-import Header from "../components/public/Header";
-import CardList from "../Product/CardList";
+import Menu from "../components/public/DropDown";
 import Carousel from "../components/public/Carousel";
-import TagCardList from "../Product/TagCardList";
+import TagCardList from "../components/Product/ProductList/TagCardList";
 const Main = () => {
   return (
     <div>
-      <Header />
       <Carousel />
       <TagCardList />
       <TagCardList />

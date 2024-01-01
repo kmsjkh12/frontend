@@ -1,12 +1,23 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import {
   UserOutlined,
   HeartOutlined,
   ShoppingCartOutlined,
   SearchOutlined,
+  MenuOutlined,
 } from "@ant-design/icons";
+
+import DropDown from "./DropDown";
 const Header = () => {
+  const [visible, setVisible] = useState(false);
+
+  const onMouseOver = () => {
+    setVisible(true);
+  };
+  const onMouseOut = () => {
+    setVisible(false);
+  };
   return (
     <HeaderWrapper>
       <TopWrapper>
@@ -41,8 +52,13 @@ const Header = () => {
       </TopWrapper>
       <MenuWrapper>
         <MenuDiv>
-          <Category>
-            <CategorySpan>카테고리</CategorySpan>
+          <Category onMouseOver={onMouseOver} onMouseOut={onMouseOut}>
+            <CategorySpan>
+              <MenuOutlined style={{ marginRight: "10px" }} />
+              카테고리
+            </CategorySpan>
+
+            {visible ? <DropDown /> : ""}
           </Category>
 
           <MenuList>
@@ -85,7 +101,7 @@ const TopWrapper = styled.div`
 `;
 const UserWrapper = styled.div`
   position: absolute;
-  top: 0;
+  top: 10px;
   right: 0;
   display: flex;
   align-items: center;
@@ -166,7 +182,6 @@ const MenuWrapper = styled.div`
   min-width: 1050px;
   letter-spacing: -0.3px;
   background-color: white;
-  position: relative;
   margin-top: 20px;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 3px 4px 0px;
   width: 100%;
@@ -174,8 +189,8 @@ const MenuWrapper = styled.div`
 const MenuDiv = styled.div`
   position: relative;
   display: flex;
-  -webkit-box-pack: justify;
   justify-content: space-between;
+  padding-top: 22px;
   width: 1050px;
   height: 56px;
   margin: 0px auto;
@@ -183,14 +198,15 @@ const MenuDiv = styled.div`
 
 const Category = styled.div`
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
+  width: 120px;
   height: 100%;
 `;
 
 const CategorySpan = styled.span`
   font-size: 16px;
   font-weight: 500;
+  padding-left: 20px;
   line-height: 20px;
   letter-spacing: -0.3px;
   color: rgb(51, 51, 51);
@@ -198,7 +214,7 @@ const CategorySpan = styled.span`
 
 const MenuList = styled.ul`
   display: flex;
-  margin-left: 30px;
+  margin-right: 50px;
   list-style-type: none;
 `;
 
@@ -220,8 +236,9 @@ const MenuSpan = styled.span`
 `;
 const ProduceWrapper = styled.div`
   display: flex;
-  -webkit-box-align: center;
   align-items: center;
+  position: relative;
+  top: -3px;
 `;
 const Produce = styled.div`
   padding: 6px 16px;
