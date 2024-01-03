@@ -11,7 +11,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <GlobalStyle />
-      <Header />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/details" element={<ProductDetail />} />

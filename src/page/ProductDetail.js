@@ -1,7 +1,7 @@
 import React from "react";
-import CardDetails from "../components/Product/ProductMore/Detail/CardDetails";
+import CardDetails from "../components/homepage/Product/ProductMore/Detail/CardDetails";
 import styled from "styled-components";
-import CardMore from "../components/Product/ProductMore/Detail/CardMore";
+import CardMore from "../components/homepage/Product/ProductMore/Detail/CardMore";
 const ProductDetail = () => {
   return (
     <ProductPageWrapper>

@@ -8,6 +8,7 @@ export const CHOICE_FOOD = "CHOICE_FOOD";
 export const NOT_CHOICE_FOOD = "NOT_CHOICE_FOOD";
 export const PAGE_PLUS = "PAGE_PLUS";
 export const PAGE_INIT = "PAGE_INIT";
+export const MOVE_DAY = "MOVE_DAY";
 const initalState = {
   search_food_loading: false,
   search_food_done: false,
@@ -16,12 +17,14 @@ const initalState = {
   choice_food_loading: false,
   choice_food_done: false,
   choice_food_error: false,
-
-  page: "",
+  day: "",
+  page: 0,
   search_food: [],
   last: "",
   choice_food: [],
   foodname: "",
+  prevfoodname: "",
+  nowfoodname: "",
 
   fat: 0,
   syn: 0,
@@ -32,6 +35,11 @@ const initalState = {
 
 const foodRedux = (state = initalState, action) => {
   switch (action.type) {
+    case MOVE_DAY:
+      return {
+        ...state,
+        day: action.data,
+      };
     // 좌석 조회 케이스들
     case SEARCH_FOOD_REQUEST:
       return {
@@ -42,21 +50,21 @@ const foodRedux = (state = initalState, action) => {
       };
     case SEARCH_FOOD_SUCCESS:
       let food_scroll;
+      //검색 후
       if (state.foodname === action.foodname) {
         food_scroll = state.search_food.concat(action.data.content);
       } else if (state.foodname !== action.foodname) {
         food_scroll = action.data.content;
       }
-
       return {
         ...state,
         search_food_loading: false,
         search_food_done: true,
         search_food_error: false,
-        page: "",
         search_food: food_scroll,
         last: action.data.last,
         foodname: action.foodname,
+        page: action.data.pageable.pageNumber + 1,
       };
     case SEARCH_FOOD_FAILURE:
       return {

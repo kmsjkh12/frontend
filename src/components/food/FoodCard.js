@@ -15,7 +15,6 @@ const FoodCard = ({ foodName, cal, checkedInputs, onChangeHandler, user }) => {
       <FoodCheck>
         <FoodCheckBox
           type="checkbox"
-          id={user.id}
           onChange={(e) => {
             onChangeHandler(e.currentTarget.checked, user);
           }}

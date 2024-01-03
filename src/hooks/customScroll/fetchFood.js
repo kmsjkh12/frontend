@@ -1,0 +1,11 @@
+import { http } from "../../lib/http";
+
+export const fetchFood = (param) => {
+  return http.get("/food-server/food", {
+    params: {
+      foodname: param.foodname,
+      pagesize: param.pagesize,
+      page: param.page,
+    },
+  });
+};

@@ -10,10 +10,12 @@ import {
 function* searchFoodLoad(data) {
   const result = yield call(searchFood, data.data);
   console.log(result);
+  console.log(result.data.body.pageable.pageNumber + 1);
   if (result.status === 200) {
     yield put({
       type: SEARCH_FOOD_SUCCESS,
       data: result.data.body,
+      page: result.data.body.pageable.pageNumber + 1,
       foodname: data.data.foodname,
     });
   } else {
