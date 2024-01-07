@@ -1,13 +1,29 @@
 import React from "react";
 import { styled } from "styled-components";
-import { useSelector } from "react-redux";
-
-const FoodCard = ({ foodName, cal, checkedInputs, onChangeHandler, user }) => {
+import { useDispatch, useSelector } from "react-redux";
+import { DETAILS_FOOD } from "../../../redux/foodRedux";
+const FoodCard = ({
+  foodname,
+  cal,
+  onChangeHandler,
+  user,
+  v,
+  onClickDetails,
+}) => {
+  const dispatch = useDispatch();
   const { choice_food } = useSelector((state) => state.foodRedux);
   return (
     <FoodCardWrapper>
-      <FoodInfoWrapper>
-        <FoodNameSpan>{foodName}</FoodNameSpan>
+      <FoodInfoWrapper
+        onClick={() => {
+          dispatch({
+            type: DETAILS_FOOD,
+            data: v,
+          });
+          onClickDetails();
+        }}
+      >
+        <FoodNameSpan>{foodname}</FoodNameSpan>
         <br />
         <FondCountSpan>1개</FondCountSpan>
         <FoodKalSpan>{cal}kal</FoodKalSpan>
@@ -16,10 +32,10 @@ const FoodCard = ({ foodName, cal, checkedInputs, onChangeHandler, user }) => {
         <FoodCheckBox
           type="checkbox"
           onChange={(e) => {
-            onChangeHandler(e.currentTarget.checked, user);
+            onChangeHandler(e.currentTarget.checked, v);
           }}
           checked={
-            choice_food.some((food) => food.id === user.id) ? true : false
+            choice_food.some((food) => food.foodid === v.foodid) ? true : false
           }
         />
         <label for="check1"></label>
@@ -38,7 +54,7 @@ const FoodCardWrapper = styled.li`
 const FoodInfoWrapper = styled.div`
   width: 80%;
   height: 100%;
-  padding: 10px 10px 10px 20px;
+  padding: 10px 0px 10px 0px;
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;

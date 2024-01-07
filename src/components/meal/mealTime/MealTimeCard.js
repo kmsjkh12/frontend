@@ -1,23 +1,41 @@
 import React, { useState } from "react";
 import { styled } from "styled-components";
-import { PlusOutlined, DownOutlined } from "@ant-design/icons";
+import { PlusOutlined } from "@ant-design/icons";
 import MealTimeContent from "./MealTimeContent";
-const MealTimeTitle = ({ time, cal, onClickFood, foodList }) => {
+import MealTimeIngredient from "./MealTimeIngredient";
+const MealTimeCard = ({
+  time,
+  cal,
+  onClickFood,
+  foodList,
+  date,
+  foodCount,
+  onClickDetails,
+}) => {
   const [visible, setVisible] = useState(false); //메뉴 더보기
 
   const onClickVisible = () => {
     setVisible(!visible);
+    console.log(foodCount);
   };
+  let food;
 
+  if (time === "morning") {
+    food = "아침식사";
+  } else if (time === "launch") {
+    food = "점심식사";
+  } else {
+    food = "저녁식사";
+  }
   return (
     <MealTimeComponent>
       <MealTimeTop
         onClick={() => {
-          onClickFood();
+          onClickFood(time, date);
         }}
       >
         <WhatMealTime>
-          <Time>{time}식사</Time>
+          <Time>{food}</Time>
         </WhatMealTime>
         <CalorieWrapper>
           <Calorie>{cal}</Calorie> <br />
@@ -40,26 +58,18 @@ const MealTimeTitle = ({ time, cal, onClickFood, foodList }) => {
           onClickVisible();
         }}
       >
-        <IntakeWrapper>
-          <SpanTag>10</SpanTag>
-        </IntakeWrapper>
-        <IntakeWrapper>
-          <SpanTag>10</SpanTag>
-        </IntakeWrapper>
-        <IntakeWrapper>
-          <SpanTag>10</SpanTag>
-        </IntakeWrapper>
-        <IntakeWrapper>
-          <SpanTag>10</SpanTag>
-        </IntakeWrapper>
-        <IntakeWrapper>
-          <SpanTag>
-            <DownOutlined />
-          </SpanTag>
-        </IntakeWrapper>
+        <MealTimeIngredient foodList={foodList} />
       </MealTimeBottom>
-      <MealVisible className={`${visible ? " visible" : "none"}`}>
-        <MealTimeContent visible={visible} foodList={foodList} />
+      <MealVisible
+        className={`${visible ? " visible" : "none"}`}
+        foodCount={foodCount}
+      >
+        <MealTimeContent
+          visible={visible}
+          foodList={foodList}
+          foodCount={foodCount}
+          onClickDetails={onClickDetails}
+        />
       </MealVisible>
     </MealTimeComponent>
   );
@@ -70,7 +80,7 @@ const MealTimeComponent = styled.div`
   height: 100%;
   display: flex;
   box-sizing: border-box;
-  border-radius: 6px;
+  border-radius: 2px;
   border: 1px solid black;
   flex-direction: column;
   margin-bottom: 20px;
@@ -85,7 +95,7 @@ const MealTimeBottom = styled.div`
   width: 100%;
   height: 50%;
   border-top: 1px solid black;
-  background-color: #a9a9a9;
+  background-color: rgb(247, 247, 247);
   display: flex;
 `;
 const WhatMealTime = styled.div`
@@ -96,16 +106,17 @@ const CalorieWrapper = styled.div`
   width: 25%;
   height: 100%;
   text-align: center;
+  font-size: 14px;
 `;
 const Time = styled.span`
   font-size: 17px;
   position: relative;
-  top: 10px;
+  top: 7px;
   left: 20%;
-  font-weight: bold;
+  font-weight: 500;
 `;
 const Calorie = styled.span`
-  font-weight: bold;
+  font-weight: 600;
   position: relative;
   top: 10%;
 `;
@@ -114,19 +125,6 @@ const Plus = styled.div`
   width: 15%;
 `;
 
-const IntakeWrapper = styled.div`
-  width: 20%;
-  padding: 5px 0px 0px 20px;
-`;
-
-const SpanTag = styled.span`
-  width: 100%;
-  height: 100%;
-  color: white;
-  font-size: 20px;
-  position: relative;
-  left: 30%;
-`;
 const MealVisible = styled.div`
   visibility: hidden;
   width: 100%;
@@ -134,7 +132,7 @@ const MealVisible = styled.div`
   transition: all 0.3s;
   &.visible {
     visibility: visible;
-    height: 250px;
+    height: ${(props) => props.foodCount * 60}px;
   }
 `;
-export default MealTimeTitle;
+export default MealTimeCard;

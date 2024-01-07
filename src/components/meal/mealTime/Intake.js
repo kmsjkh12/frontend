@@ -1,65 +1,41 @@
 import React from "react";
 import { styled } from "styled-components";
-import { useSelector } from "react-redux";
-
-const Intake = () => {
-  var metabolic;
-  const { fat, syn, protein, recommend, sum } = useSelector(
-    (state) => state.foodRedux
-  );
-  const { calorie } = useSelector((state) => state.healthRedux);
-  const eat = (type, cm, kg, age) => {
-    if (type === "man") {
-      metabolic = 66.5 + 13.75 * kg + 5.003 * cm - 6.75 * age;
-    } else if (type === "woman") {
-      metabolic = 655.1 + 9.563 * kg + 1.85 * cm - 4.676 * age;
-    }
-    console.log(metabolic);
-  };
-  const recommend_s = () => {
-    return (parseInt(sum) / 2700) * 100;
-  };
-  /*
-  const protein = (kg) => {
-    return kg * 1.2;
-  };
-  const fat = () => {
-    return metabolic % 30;
-  };
-  const carbohydrate = () => {
-    return metabolic % 55;
-  };
-*/
+import * as fun from "../../public/func/FoodFunc";
+const Intake = ({ data }) => {
   return (
     <IntakeWrapper>
       <IntakeDiv>
         <IntakeInfo>
           <IntakeTitle>지방</IntakeTitle>
-          <IntakeNumber>{fat}</IntakeNumber>
+          <IntakeNumber>{Math.round(fun.extractTotalFat(data))}</IntakeNumber>
         </IntakeInfo>
       </IntakeDiv>
       <IntakeDiv>
         <IntakeInfo>
           <IntakeTitle>탄수</IntakeTitle>
-          <IntakeNumber>{syn}</IntakeNumber>
+          <IntakeNumber>{Math.round(fun.extractTotalSyn(data))}</IntakeNumber>
         </IntakeInfo>
       </IntakeDiv>
       <IntakeDiv>
         <IntakeInfo>
           <IntakeTitle>단백질</IntakeTitle>
-          <IntakeNumber>{protein}</IntakeNumber>
+          <IntakeNumber>
+            {Math.round(fun.extractTotalProtein(data))}
+          </IntakeNumber>
         </IntakeInfo>
       </IntakeDiv>
       <IntakeDiv>
         <IntakeInfo>
           <IntakeTitle>권장</IntakeTitle>
-          <IntakeNumber>{parseInt(recommend_s())}%</IntakeNumber>
+          <IntakeNumber>
+            {Math.round(fun.권장섭취량_계산(fun.extractTotalCal(data)))}%
+          </IntakeNumber>
         </IntakeInfo>
       </IntakeDiv>
       <IntakeDiv>
         <IntakeInfo>
           <IntakeTitle>종합</IntakeTitle>
-          <IntakeNumber>{sum}</IntakeNumber>
+          <IntakeNumber>{Math.round(fun.extractTotalCal(data))}</IntakeNumber>
         </IntakeInfo>
       </IntakeDiv>
     </IntakeWrapper>
@@ -67,7 +43,7 @@ const Intake = () => {
 };
 
 const IntakeWrapper = styled.div`
-  width: 300px;
+  width: 100%;
   height: 80px;
   margin: 0 auto;
   display: flex;

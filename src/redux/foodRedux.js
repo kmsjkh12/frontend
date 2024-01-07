@@ -9,6 +9,8 @@ export const NOT_CHOICE_FOOD = "NOT_CHOICE_FOOD";
 export const PAGE_PLUS = "PAGE_PLUS";
 export const PAGE_INIT = "PAGE_INIT";
 export const MOVE_DAY = "MOVE_DAY";
+export const SEARCH_WORD = "SEARCH_WORD";
+export const DETAILS_FOOD = "DETAILS_FOOD";
 const initalState = {
   search_food_loading: false,
   search_food_done: false,
@@ -17,6 +19,8 @@ const initalState = {
   choice_food_loading: false,
   choice_food_done: false,
   choice_food_error: false,
+  search_word: "",
+
   day: "",
   page: 0,
   search_food: [],
@@ -25,6 +29,8 @@ const initalState = {
   foodname: "",
   prevfoodname: "",
   nowfoodname: "",
+
+  details_food: {},
 
   fat: 0,
   syn: 0,
@@ -35,10 +41,20 @@ const initalState = {
 
 const foodRedux = (state = initalState, action) => {
   switch (action.type) {
+    case SEARCH_WORD:
+      return {
+        ...state,
+        search_word: action.data,
+      };
     case MOVE_DAY:
       return {
         ...state,
         day: action.data,
+      };
+    case DETAILS_FOOD:
+      return {
+        ...state,
+        details_food: action.data,
       };
     // 좌석 조회 케이스들
     case SEARCH_FOOD_REQUEST:
@@ -52,9 +68,9 @@ const foodRedux = (state = initalState, action) => {
       let food_scroll;
       //검색 후
       if (state.foodname === action.foodname) {
-        food_scroll = state.search_food.concat(action.data.content);
+        food_scroll = state.search_food.concat(action.food_data);
       } else if (state.foodname !== action.foodname) {
-        food_scroll = action.data.content;
+        food_scroll = action.food_data;
       }
       return {
         ...state,
@@ -82,9 +98,15 @@ const foodRedux = (state = initalState, action) => {
       const update_syn = parseInt(state.syn) + parseInt(action.data.syn);
       const update_sum =
         parseInt(state.sum) + parseInt(action.data.foodCalorie);
+      let add_data = action.data.card;
+
+      add_data.mealdate = action.data.mealdate;
+      add_data.userid = action.data.id;
+      add_data.mealtime = action.data.mealtime;
+      console.log(add_data);
       return {
         ...state,
-        choice_food: [...state.choice_food, action.data],
+        choice_food: [...state.choice_food, add_data],
         fat: update_fat,
         syn: update_syn,
         protein: update_protein,
@@ -99,7 +121,9 @@ const foodRedux = (state = initalState, action) => {
       const delete_sum =
         parseInt(state.sum) - parseInt(action.data.foodCalorie);
 
-      const food = state.choice_food.filter((el) => el.id !== action.data.id);
+      const food = state.choice_food.filter(
+        (el) => el.foodid !== action.data.foodid
+      );
       return {
         ...state,
         choice_food: food,

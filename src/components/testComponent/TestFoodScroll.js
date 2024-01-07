@@ -1,6 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef } from "react";
 import styled from "@emotion/styled";
-import FoodCard from "../food/FoodCard";
+import FoodCard from "../meal/mealSelect/FoodCard";
 import { SearchBox, InputSearch, InputButton } from "../../css/BasicInput";
 import { SearchOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";

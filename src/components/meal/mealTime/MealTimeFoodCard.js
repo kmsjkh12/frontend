@@ -1,16 +1,27 @@
 import React from "react";
 import { styled } from "styled-components";
 import { RightOutlined } from "@ant-design/icons";
+import { useDispatch } from "react-redux";
+import { DETAILS_FOOD } from "../../../redux/foodRedux";
 
-const MealTimeFoodCard = ({ d }) => {
+const MealTimeFoodCard = ({ d, onClickDetails }) => {
+  const dispatch = useDispatch();
   return (
-    <MealTimeFoodCardWrapper>
+    <MealTimeFoodCardWrapper
+      onClick={() => {
+        dispatch({
+          type: DETAILS_FOOD,
+          data: d,
+        });
+        onClickDetails();
+      }}
+    >
       <FoodInfo>
         <FoodName>
-          <Name>{d.foodName}</Name>
+          <Name>{d.foodname}</Name>
         </FoodName>
         <FoodWeight>
-          <Count>1개</Count>
+          <Count>{d.foodcount}개</Count>
           <Weight>{d.foodServing}g</Weight>
         </FoodWeight>
         <FoodIntake>
@@ -24,13 +35,13 @@ const MealTimeFoodCard = ({ d }) => {
             <SpanTag>{d.protein}</SpanTag>
           </IntakeWrapper>
           <IntakeWrapper>
-            <SpanTag>{d.foodCalorie}</SpanTag>
+            <SpanTag>{d.cal}</SpanTag>
           </IntakeWrapper>
         </FoodIntake>
       </FoodInfo>
       <FoodCalorie>
         <CalorieWrapper>
-          <Carlorie>{d.foodCalorie}</Carlorie>
+          <Carlorie>{d.cal}</Carlorie>
           <br />
           칼로리
         </CalorieWrapper>
@@ -50,18 +61,27 @@ const MealTimeFoodCardWrapper = styled.div`
   display: flex;
 `;
 const FoodInfo = styled.div`
-  width: 70%;
+  width: 270px;
   height: 100%;
   display: flex;
   flex-wrap: wrap;
 `;
 
 const FoodName = styled.div`
-  width: 100%;
+  width: 270px;
+  height: 20px;
+
   padding: 3px 5px 0px 25px;
 `;
 const Name = styled.span`
+  display: block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
   font-size: 15px;
+  height: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 const FoodWeight = styled.div`
   width: 100%;

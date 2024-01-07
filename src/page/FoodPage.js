@@ -1,14 +1,10 @@
 import React from "react";
 import { styled } from "styled-components";
-import FoodSelect from "../components/food/FoodSelect";
-import Intake from "../components/food/Intake";
-import Total from "../components/food/Toltal";
+import FoodDetailComponent from "../components/meal/mealComponent/FoodDetailComponent";
 const FoodPage = () => {
   return (
     <FoodPageWrapper>
-      <Intake />
-      <FoodSelect />
-      <Total />
+      <FoodDetailComponent />
     </FoodPageWrapper>
   );
 };
