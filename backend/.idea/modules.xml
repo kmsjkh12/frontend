@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Auth-Server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Auth-Server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Food-Server.main.iml" filepath="$PROJECT_DIR$/.idea/modules/Food-Server.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/backend.iml" filepath="$PROJECT_DIR$/.idea/backend.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/save_food.main.iml" filepath="$PROJECT_DIR$/.idea/modules/save_food.main.iml" />
+    </modules>
+  </component>
+</project>

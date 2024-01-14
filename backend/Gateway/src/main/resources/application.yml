@@ -1,0 +1,61 @@
+server:
+  port: 8500
+
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+spring:
+  application:
+    name: gateway-server
+  cloud:
+    gateway:
+      default-filters:
+        - DedupeResponseHeader=Access-Control-Allow-Origin Access-Control-Allow-Credentials
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: 'http://localhost:3000'
+            allow-credentials: true
+            allowedHeaders: '*'
+            allowedMethods:
+              - PUT
+              - GET
+              - POST
+              - DELETE
+              - OPTIONS
+      routes:
+        - id: food-server
+          uri: lb://FOOD-SERVER
+          predicates:
+            - Path=/food-server/**
+          filters:
+            - RewritePath=/food-server/(?<segment>.*), /$\{segment}
+
+
+        - id: user-server
+          uri: lb://USER-SERVER
+          predicates:
+            - Path=/user-server/**
+          filters:
+            - RewritePath=/user-server/(?<segment>.*), /$\{segment}
+
+
+        - id: save-food-server
+          uri: lb://SAVE-FOOD-SERVER
+          predicates:
+            - Path=/save-food-server/**
+          filters:
+            - RewritePath=/save-food-server/(?<segment>.*), /$\{segment}
+jwt:
+  secret: c3ByaW5nLWJvb3Qtc2VjdXJpdHktand0LXR1dG9yaWFsLWJqLXNwcmluZy1ib290LXNlY3VyaXR5LWp3dC10dXRvcmlhbAo=GzcMAY5
+  token-validity-in-seconds: 1000000
+
+
+
+
